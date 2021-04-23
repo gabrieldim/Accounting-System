@@ -95,7 +95,8 @@ public class RestTurnoverController {
     }
 
     @GetMapping("/byMonth2")
-    public ResponseEntity<List<TurnoverByMonthInterface>> getTurnoverByMonths2(Principal principal){
+    public ResponseEntity<List<TurnoverByMonthInterface>> getTurnoverByMonths2(
+            Principal principal){
         String username = principal.getName();
         User user = this.userRepository.findByUsername(username).get();
 
@@ -109,4 +110,6 @@ public class RestTurnoverController {
 
         return ResponseEntity.ok(turnoverByMonthInterfaceList);
     }
+
+
 }

@@ -16,8 +16,6 @@ public interface CompanyService {
     Company save(
             String name,
             String founder,
-            List<Product> products,
-            List<WorkService> workServices,
             String address,
             LocalDateTime incorporationDate,
             String taxNumber,

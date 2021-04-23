@@ -41,8 +41,6 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Company save(String name,
                         String founder,
-                        List<Product> products,
-                        List<WorkService> workServices,
                         String address,
                         LocalDateTime incorporationDate,
                         String taxNumber,
@@ -51,8 +49,6 @@ public class CompanyServiceImpl implements CompanyService {
         Company company = new Company(
                 name,
                 founder,
-                products,
-                workServices,
                 address,
                 incorporationDate,
                 taxNumber,

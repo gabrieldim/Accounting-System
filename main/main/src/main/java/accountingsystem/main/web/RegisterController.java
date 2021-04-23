@@ -45,7 +45,7 @@ public class RegisterController {
         }
         String hashedPassword=passwordEncoder.encode(password);
         this.userRepository.save(new User(email,hashedPassword,firstName,lastName));
-        return new RedirectView("/dashboard");
+        return new RedirectView("/auth/login");
 
     }
 

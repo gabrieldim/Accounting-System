@@ -27,6 +27,17 @@ public class Company {
     @ManyToOne
     private User user;
 
+    public Company( String name, String founder, String address, LocalDateTime incorporationDate,
+                    String taxNumber, String registeredNumber, User user) {
+        this.name = name;
+        this.founder = founder;
+        this.address = address;
+        this.incorporationDate = incorporationDate;
+        this.taxNumber = taxNumber;
+        this.registeredNumber = registeredNumber;
+        this.user = user;
+    }
+
     public Company(String name, String founder, List<Product> products, List<WorkService> workServices,
                    String address,
                    LocalDateTime incorporationDate, String taxNumber, String registeredNumber, User user) {

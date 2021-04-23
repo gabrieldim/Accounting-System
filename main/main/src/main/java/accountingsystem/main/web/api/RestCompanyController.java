@@ -68,8 +68,6 @@ public class RestCompanyController {
         Company newCompany=this.companyService.save(
                 addCompanyRequest.getName(),
                 addCompanyRequest.getFounder(),
-                products,
-                workServices,
                 addCompanyRequest.getAddress(),
                 newIncorporationDate,
                 addCompanyRequest.getTaxNumber(),

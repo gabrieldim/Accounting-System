@@ -1,22 +1,17 @@
 package accountingsystem.main.service;
 
 
-import accountingsystem.main.model.Product;
 import accountingsystem.main.model.Turnover;
-import accountingsystem.main.model.WorkService;
-import com.itextpdf.text.BaseColor;
-import com.lowagie.text.*;
 import com.lowagie.text.Font;
+import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfTable;
 import com.lowagie.text.pdf.PdfWriter;
 
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class TestPDFExporter {
     private List<Turnover> turnoverList;
@@ -24,22 +19,17 @@ public class TestPDFExporter {
     private Long totalSellingPrice;
     private Double totalTaxed;
 
-
-
-
-public TestPDFExporter(List<Turnover> turnoverList){
-    this.turnoverList=turnoverList;
-    this.totalProcurementPrice= Long.valueOf(0);
-    this.totalSellingPrice=Long.valueOf(0);
-    this.totalTaxed=Double.valueOf(0);
-
-}
-
+    public TestPDFExporter(List<Turnover> turnoverList){
+        this.turnoverList=turnoverList;
+        this.totalProcurementPrice= Long.valueOf(0);
+        this.totalSellingPrice=Long.valueOf(0);
+        this.totalTaxed=Double.valueOf(0);
+    }
 
     public TestPDFExporter() {
-this.totalProcurementPrice= Long.valueOf(0);
-this.totalSellingPrice=Long.valueOf(0);
-this.totalTaxed=Double.valueOf(0);
+        this.totalProcurementPrice= Long.valueOf(0);
+        this.totalSellingPrice=Long.valueOf(0);
+        this.totalTaxed=Double.valueOf(0);
     }
 
     public void export(HttpServletResponse response) throws IOException {
@@ -74,8 +64,6 @@ this.totalTaxed=Double.valueOf(0);
         writeTableSummaryHeaders(tableSummary);
         WriteTableSummaryData(tableSummary);
         document.add(tableSummary);
-
-
 
         document.close();
 
