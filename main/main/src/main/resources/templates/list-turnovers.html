@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<li th:each="turnover : ${turnovers}" ><span th:text:="${turnover.getNumberProducts()}"></span></li>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form method="post" action="/auth/login">
+    <label for="username" class="sr-only">Username</label>
+    <input type="text" id="username" name="username"  placeholder="Username" required=""
+           autofocus="">
+    <label for="password" >Password</label>
+    <input type="password" id="password" name="password"  placeholder="Password"
+           required="">
+    <div th:text="${param.error}" class="text-danger"></div>
+
+    <button id="submit" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+
+</form>
+<a href="http://localhost:8080/oauth2/authorization/google">Log in with google</a>
+
+
+</body>
+</html>
