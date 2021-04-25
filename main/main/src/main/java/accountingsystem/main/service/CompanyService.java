@@ -23,4 +23,5 @@ public interface CompanyService {
             User user);
     Company deleteById(Long Id);
     List<Company> findByUser(User user);
+    Company save(Company company);
 }

@@ -69,4 +69,9 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Company> findByUser(User user) {
       return this.companyRepository.findAllByUser(user);
     }
+
+    @Override
+    public Company save(Company company) {
+        return this.companyRepository.save(company);
+    }
 }

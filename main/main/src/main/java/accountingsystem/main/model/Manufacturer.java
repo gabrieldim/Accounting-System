@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Manufacturer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
+    private Long Id;
     private String name;
     private String country;
 
@@ -20,11 +20,11 @@ public class Manufacturer {
         this.country = country;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return Id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         Id = id;
     }
 

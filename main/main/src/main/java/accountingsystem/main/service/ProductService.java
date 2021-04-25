@@ -19,4 +19,5 @@ public interface ProductService {
             LocalDateTime date,
             LocalDateTime expirationDate);
     Product deleteById(Long Id);
+    Product save(Product product);
 }
