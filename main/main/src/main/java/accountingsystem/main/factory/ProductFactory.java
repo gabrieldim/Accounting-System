@@ -7,13 +7,13 @@ public class ProductFactory {
     public static Product createProduct(
             String description,
             String name,
-            Long profit,
+            Long price,
             Manufacturer manufacturer){
 
         Product product = new Product();
         product.setDescription(description);
         product.setName(name);
-        product.setProfit(profit);
+        product.setPrice(price);
         product.setManufacturer(manufacturer);
         return product;
     }

@@ -82,9 +82,9 @@
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Custom Utilities:</h6>
-                    <a class="collapse-item" href="../static/utilities-color.html">Products</a>
-                    <a class="collapse-item" href="../static/utilities-border.html">Services</a>
+                    <h6 class="collapse-header">Goods and services:</h6>
+                    <a class="collapse-item" href="/product/add">Products</a>
+                    <a class="collapse-item" href="/workservice/insert">Services</a>
                 </div>
             </div>
         </li>
@@ -361,6 +361,11 @@
 
                 <form action="/turnover/insert" method="POST">
                     <div class="form-group">
+                        <label for="productId">Products</label>
+                        <select name="productId" class="form-control" id="productId">
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="amount">Amount</label>
                         <input type="text" name="amount" class="form-control" id="amount">
 
@@ -368,15 +373,23 @@
                     <div class="form-group">
                         <label for="date">Date</label>
                         <input type="text" name="date" class="form-control" id="date">
-
                     </div>
-                    <div class="form-group">
-                        <label for="products">Sold Products</label>
-                        <input type="text" name="products" class="form-control" id="products">
 
-                    </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+                <script>
+                    async function getManufacturers() {
+                        let data = await fetch("/api/product/getAllProductsForCompany");
+                        let json = await data.json();
+
+                        const manufacturersList = document.getElementById("productId");
+
+                        for (let i = 0; i < json.length; i++) {
+                            manufacturersList.innerHTML += `<option value="${json[i].id}" >${json[i].name}</option>`;
+                        }
+                    }
+                    getManufacturers();
+                </script>
 
 
                 <!-- /.container-fluid -->

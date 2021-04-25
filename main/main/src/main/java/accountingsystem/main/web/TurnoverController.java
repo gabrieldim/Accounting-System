@@ -1,14 +1,15 @@
 package accountingsystem.main.web;
 
 import accountingsystem.main.model.Company;
+import accountingsystem.main.model.Product;
 import accountingsystem.main.model.Turnover;
 import accountingsystem.main.model.User;
 import accountingsystem.main.repository.TurnoverRepository;
 import accountingsystem.main.repository.UserRepository;
 import accountingsystem.main.service.CompanyService;
+import accountingsystem.main.service.ProductService;
 import accountingsystem.main.service.TestPDFExporter;
 import accountingsystem.main.service.TurnoverService;
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -32,12 +34,14 @@ public class TurnoverController {
     private final UserRepository userRepository;
     private final TurnoverRepository turnoverRepository;
     private final CompanyService companyService;
+    private final ProductService productService;
 
-    public TurnoverController(CompanyService companyService,TurnoverService turnoverService, UserRepository userRepository, TurnoverRepository turnoverRepository) {
+    public TurnoverController(CompanyService companyService, TurnoverService turnoverService, UserRepository userRepository, TurnoverRepository turnoverRepository, ProductService productService) {
         this.turnoverService = turnoverService;
         this.userRepository = userRepository;
         this.turnoverRepository = turnoverRepository;
         this.companyService=companyService;
+        this.productService = productService;
     }
     @GetMapping
     public String listAllTurnovers(Model model){
@@ -81,9 +85,9 @@ public class TurnoverController {
 
     @PostMapping("/turnover/insert")
     public String insertDailyTurnover(
+            @RequestParam String productId,
             @RequestParam String amount,
             @RequestParam String date,
-            @RequestParam String products,
             Principal principal) {
         String username = principal.getName();
         User user = this.userRepository.findByUsername(username).get();
@@ -93,8 +97,20 @@ public class TurnoverController {
 
         turnover.setAmount(Long.parseLong(amount));
         turnover.setCompany(company);
-        turnover.setDate(LocalDateTime.now());
-        turnover.setNumberProducts(Integer.parseInt(products));
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String dateSold = date + " 00:00";
+        LocalDateTime dateTime = LocalDateTime.parse(dateSold, formatter);
+
+        turnover.setDate(dateTime);
+
+        company.setSoldProducts(company.getSoldProducts() + Long.valueOf(amount));
+
+        Product product = productService.findById(Long.valueOf(productId));
+
+        Long totalAmount = product.getPrice() * Long.valueOf(amount);
+        turnover.setAmount(totalAmount);
         this.turnoverRepository.save(turnover);
 
         return "redirect:/dashboard";

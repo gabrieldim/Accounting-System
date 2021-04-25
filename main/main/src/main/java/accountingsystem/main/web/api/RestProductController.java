@@ -1,14 +1,15 @@
 package accountingsystem.main.web.api;
 
-import accountingsystem.main.model.Manufacturer;
-import accountingsystem.main.model.Product;
-import accountingsystem.main.model.Turnover;
+import accountingsystem.main.dto.SoldProductsCountDto;
+import accountingsystem.main.model.*;
+import accountingsystem.main.repository.UserRepository;
 import accountingsystem.main.service.ManufacturerService;
 import accountingsystem.main.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -18,9 +19,11 @@ import java.util.List;
 public class RestProductController {
     private final ProductService productService;
     private final ManufacturerService manufacturerService;
-    public RestProductController(ProductService productService, ManufacturerService manufacturerService){
+    private final UserRepository userRepository;
+    public RestProductController(ProductService productService, ManufacturerService manufacturerService, UserRepository userRepository){
         this.productService=productService;
         this.manufacturerService=manufacturerService;
+        this.userRepository = userRepository;
     }
     @GetMapping("/getProductById/{productId}")
     public ResponseEntity<Product> getProductById(@RequestParam Long productId){
@@ -63,6 +66,25 @@ public class RestProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(Id, HttpStatus.OK);
+    }
+    @GetMapping("/getAllProductsForCompany")
+    public ResponseEntity<List<Product>> getAllProductsForCompany(Principal principal){
+        String username = principal.getName();
+        User user = this.userRepository.findByUsername(username).get();
+
+        Company company = user.getCompanies().stream().findFirst().get();
+
+        List<Product> products= company.getProducts();
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/getAllSoldProductsCount")
+    public ResponseEntity<SoldProductsCountDto> getAllSoldProductsCount(Principal principal){
+        String username = principal.getName();
+        User user = this.userRepository.findByUsername(username).get();
+
+        Company company = user.getCompanies().stream().findFirst().get();
+        return ResponseEntity.ok(new SoldProductsCountDto(company.getSoldProducts()));
     }
 
 }

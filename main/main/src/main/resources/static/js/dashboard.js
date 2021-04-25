@@ -27,7 +27,16 @@ async function getEarningsAnnual() {
         document.getElementById("annually").innerHTML = '$' + data.earnings;
     }
 }
-
+async function getSoldProducts() {
+    const response = await fetch("http://localhost:8080/api/product/getAllSoldProductsCount");
+    const data = await response.json();
+    if(data.soldProductsCounter===undefined){
+        document.getElementById("soldProducts").innerHTML =  0;
+    }else{
+        document.getElementById("soldProducts").innerHTML = data.soldProductsCounter;
+    }
+}
+getSoldProducts();
 getEarnings();
 getEarningsAnnual();
 getFirstNameAndLastName();

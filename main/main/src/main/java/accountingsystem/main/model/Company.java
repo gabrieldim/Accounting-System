@@ -26,10 +26,30 @@ public class Company {
     private String registeredNumber;
     @ManyToOne
     private User user;
+    private Long soldProducts;
+    private Long soldServices;
 
-    public Company( String name, String founder, String address, LocalDateTime incorporationDate,
-                    String taxNumber, String registeredNumber, User user) {
+    public Long getSoldProducts() {
+        return soldProducts;
+    }
+
+    public void setSoldProducts(Long soldProducts) {
+        this.soldProducts = soldProducts;
+    }
+
+    public Long getSoldServices() {
+        return soldServices;
+    }
+
+    public void setSoldServices(Long soldServices) {
+        this.soldServices = soldServices;
+    }
+
+    public Company(String name, String founder, String address, LocalDateTime incorporationDate,
+                   String taxNumber, String registeredNumber, User user) {
         this.name = name;
+        this.soldProducts=0l;
+        this.soldServices=0l;
         this.founder = founder;
         this.address = address;
         this.incorporationDate = incorporationDate;
@@ -44,6 +64,8 @@ public class Company {
         this.name = name;
         this.founder = founder;
         this.products = products;
+        this.soldProducts=0l;
+        this.soldServices=0l;
         this.workServices = workServices;
         this.address = address;
         this.incorporationDate = incorporationDate;
