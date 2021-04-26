@@ -45,7 +45,6 @@ public class TurnoverController {
         this.workServicesService = workServicesService;
     }
 
-
     @GetMapping
     public String listAllTurnovers(Model model){
         model.addAttribute("turnovers",turnoverService.findAll());
@@ -53,7 +52,9 @@ public class TurnoverController {
     }
 
     @GetMapping("/turnover/export/pdf")
-    public void exportToPDF(HttpServletResponse response) throws IOException {
+    public void exportToPDF(
+            HttpServletResponse response,
+            Principal principal) throws IOException {
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -63,11 +64,15 @@ public class TurnoverController {
         response.setHeader(headerKey, headerValue);
 
         TestPDFExporter exporter = new TestPDFExporter();
-        exporter.export(response);
+        exporter.export(response, principal, userRepository, companyService, turnoverRepository);
     }
 
     @GetMapping("/turnover/export/pdf/{companyID}/{date}")
-    public void exportToPDFwithDate(HttpServletResponse response, @PathVariable Long companyID,@PathVariable LocalDateTime date) throws IOException{
+    public void exportToPDFwithDate(
+            HttpServletResponse response,
+            @PathVariable Long companyID,
+            @PathVariable LocalDateTime date,
+            Principal principal) throws IOException{
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -78,7 +83,7 @@ public class TurnoverController {
         List<Turnover> turnoverList=this.turnoverService.getAllByCompanyAndMonth(companyID,date);
 
         TestPDFExporter exporter = new TestPDFExporter();
-        exporter.export(response);
+        exporter.export(response, principal, userRepository, companyService, turnoverRepository);
     }
 
     @GetMapping("/turnover/insert")
@@ -126,6 +131,7 @@ public class TurnoverController {
             @RequestParam String amount,
             @RequestParam String date,
             Principal principal) {
+
         String username = principal.getName();
         User user = this.userRepository.findByUsername(username).get();
         Company company = user.getCompanies().stream().findFirst().get();

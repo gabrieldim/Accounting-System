@@ -590,6 +590,14 @@ pre code {
   margin-left: -0.75rem;
 }
 
+.row-custom {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -0.25rem;
+  margin-left: -0.25rem;
+  width: 300px;
+}
+
 .no-gutters {
   margin-right: 0;
   margin-left: 0;
@@ -1210,9 +1218,16 @@ pre code {
     flex: 0 0 50%;
     max-width: 50%;
   }
+  .col-lg-6-custom {
+    flex: 0 0 0 0;
+  }
   .col-lg-7 {
     flex: 0 0 58.33333%;
     max-width: 58.33333%;
+  }
+
+  .col-lg-7-custom {
+    flex: 0 0 0 0;
   }
   .col-lg-8 {
     flex: 0 0 66.66667%;
