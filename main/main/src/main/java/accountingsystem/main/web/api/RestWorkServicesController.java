@@ -1,6 +1,8 @@
 package accountingsystem.main.web.api;
 
 
+import accountingsystem.main.dto.SoldProductsCountDto;
+import accountingsystem.main.dto.SoldWorkServicesCountDto;
 import accountingsystem.main.model.*;
 import accountingsystem.main.repository.UserRepository;
 import accountingsystem.main.service.WorkServicesService;
@@ -63,6 +65,14 @@ public class RestWorkServicesController {
         Company company = user.getCompanies().stream().findFirst().get();
         List<WorkService> workServices=company.getWorkServices();
         return ResponseEntity.ok(workServices);
+    }
+    @GetMapping("/getAllWorkServicesCount")
+    public ResponseEntity<SoldWorkServicesCountDto> getAllWorkServicesCount(Principal principal){
+        String username = principal.getName();
+        User user = this.userRepository.findByUsername(username).get();
+
+        Company company = user.getCompanies().stream().findFirst().get();
+        return ResponseEntity.ok(new SoldWorkServicesCountDto(company.getSoldServices()));
     }
 
 }

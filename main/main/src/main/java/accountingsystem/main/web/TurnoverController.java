@@ -1,15 +1,9 @@
 package accountingsystem.main.web;
 
-import accountingsystem.main.model.Company;
-import accountingsystem.main.model.Product;
-import accountingsystem.main.model.Turnover;
-import accountingsystem.main.model.User;
+import accountingsystem.main.model.*;
 import accountingsystem.main.repository.TurnoverRepository;
 import accountingsystem.main.repository.UserRepository;
-import accountingsystem.main.service.CompanyService;
-import accountingsystem.main.service.ProductService;
-import accountingsystem.main.service.TestPDFExporter;
-import accountingsystem.main.service.TurnoverService;
+import accountingsystem.main.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,14 +29,23 @@ public class TurnoverController {
     private final TurnoverRepository turnoverRepository;
     private final CompanyService companyService;
     private final ProductService productService;
+    private final WorkServicesService workServicesService;
 
-    public TurnoverController(CompanyService companyService, TurnoverService turnoverService, UserRepository userRepository, TurnoverRepository turnoverRepository, ProductService productService) {
+    public TurnoverController(TurnoverService turnoverService,
+                              UserRepository userRepository,
+                              TurnoverRepository turnoverRepository,
+                              CompanyService companyService,
+                              ProductService productService,
+                              WorkServicesService workServicesService) {
         this.turnoverService = turnoverService;
         this.userRepository = userRepository;
         this.turnoverRepository = turnoverRepository;
-        this.companyService=companyService;
+        this.companyService = companyService;
         this.productService = productService;
+        this.workServicesService = workServicesService;
     }
+
+
     @GetMapping
     public String listAllTurnovers(Model model){
         model.addAttribute("turnovers",turnoverService.findAll());
@@ -115,6 +118,42 @@ public class TurnoverController {
 
         return "redirect:/dashboard";
     }
+    @PostMapping("/turnover/insert/services")
+    public String insertDailyTurnoverServices(
+            @RequestParam String serviceId,
+            @RequestParam String amount,
+            @RequestParam String date,
+            Principal principal) {
+        String username = principal.getName();
+        User user = this.userRepository.findByUsername(username).get();
+        Company company = user.getCompanies().stream().findFirst().get();
 
+        Turnover turnover = new Turnover();
+
+        turnover.setAmount(Long.parseLong(amount));
+        turnover.setCompany(company);
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String dateSold = date + " 00:00";
+        LocalDateTime dateTime = LocalDateTime.parse(dateSold, formatter);
+
+        turnover.setDate(dateTime);
+
+        company.setSoldServices(company.getSoldServices() + Long.valueOf(amount));
+
+        WorkService workService = workServicesService.findById(Long.valueOf(serviceId));
+
+        Long totalAmount = workService.getPrice() * Long.valueOf(amount);
+        turnover.setAmount(totalAmount);
+        this.turnoverRepository.save(turnover);
+
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/turnover/insert/services")
+    public String getInsertTurnoverServicesPage(){
+        return "insert-turnover-services";
+    }
 
 }

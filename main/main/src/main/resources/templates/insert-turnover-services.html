@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Accounting System - Add Product</title>
+    <title>Accounting System - Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -142,7 +142,6 @@
         </div>
 
 
-
     </ul>
     <!-- End of Sidebar -->
 
@@ -206,7 +205,6 @@
                         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-bell fa-fw"></i>
-                            <!-- Counter - Alerts -->
                             <!-- Counter - Alerts -->
                             <span class="badge badge-danger badge-counter">3+</span>
                         </a>
@@ -362,34 +360,30 @@
 
                 <!-- Page Heading -->
 
-                <form action="/product/add" method="POST">
+                <form action="/turnover/insert/services" method="POST">
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" class="form-control" id="name">
+                        <label for="serviceId">Service</label>
+                        <select name="serviceId" class="form-control" id="serviceId">
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
-                        <input type="text" name="description" class="form-control" id="description">
+                        <label for="amount">Amount</label>
+                        <input type="text" name="amount" class="form-control" id="amount">
 
                     </div>
                     <div class="form-group">
-                        <label for="price">Price</label>
-                        <input type="text" name="price" class="form-control" id="price">
+                        <label for="date">Date</label>
+                        <input type="text" name="date" class="form-control" id="date">
+                    </div>
 
-                    </div>
-                    <div class="form-group">
-                        <label for="manufacturerId">Manufacturer</label>
-                       <select name="manufacturerId" class="form-control" id="manufacturerId">
-                       </select>
-                    </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
                 <script>
                     async function getManufacturers() {
-                        let data = await fetch("/api/manufacturer/getAllManufacturers");
+                        let data = await fetch("/api/workServices/getAllWorkServicesForCompany");
                         let json = await data.json();
 
-                        const manufacturersList = document.getElementById("manufacturerId");
+                        const manufacturersList = document.getElementById("serviceId");
 
                         for (let i = 0; i < json.length; i++) {
                             manufacturersList.innerHTML += `<option value="${json[i].id}" >${json[i].name}</option>`;
@@ -397,6 +391,8 @@
                     }
                     getManufacturers();
                 </script>
+
+
                 <!-- /.container-fluid -->
 
             </div>

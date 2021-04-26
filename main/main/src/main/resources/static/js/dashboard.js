@@ -36,6 +36,17 @@ async function getSoldProducts() {
         document.getElementById("soldProducts").innerHTML = data.soldProductsCounter;
     }
 }
+async function getSoldServices() {
+    const response = await fetch("http://localhost:8080/api/workServices/getAllWorkServicesCount");
+    const data = await response.json();
+    if(data.soldWorkServicesCount===undefined){
+        document.getElementById("soldServices").innerHTML =  0;
+    }else{
+        document.getElementById("soldServices").innerHTML = data.soldWorkServicesCount;
+    }
+}
+
+getSoldServices();
 getSoldProducts();
 getEarnings();
 getEarningsAnnual();
