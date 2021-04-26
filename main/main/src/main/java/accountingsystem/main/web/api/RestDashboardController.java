@@ -1,5 +1,6 @@
 package accountingsystem.main.web.api;
 
+import accountingsystem.main.dto.RevenueSourceDto;
 import accountingsystem.main.dto.TurnoverMonthlyDto;
 import accountingsystem.main.dto.TurnoverYearlyDto;
 import accountingsystem.main.model.Company;
@@ -56,7 +57,6 @@ public class RestDashboardController {
                 .findFirst();
 
 
-
         turnoverMonthly.setEarnings(currentMonth.get().getamount());
         return ResponseEntity.ok(turnoverMonthly);
     }
@@ -66,7 +66,6 @@ public class RestDashboardController {
         TurnoverYearlyDto turnoverYearlyDto = new TurnoverYearlyDto();
 
         LocalDateTime now = LocalDateTime.now();
-
 
         String username = principal.getName();
         User user = this.userRepository.findByUsername(username).get();
@@ -86,6 +85,20 @@ public class RestDashboardController {
 
         turnoverYearlyDto.setEarnings(currentYear);
         return ResponseEntity.ok(turnoverYearlyDto);
+    }
+
+    @GetMapping("/revenue")
+    public ResponseEntity<RevenueSourceDto> getRevenueSources(Principal principal) {
+        String username = principal.getName();
+        User user = this.userRepository.findByUsername(username).get();
+
+        Company company = user.getCompanies().stream().findFirst().get();
+
+        RevenueSourceDto revenueSourceDto = new RevenueSourceDto();
+        revenueSourceDto.setProductsRevenue(company.getRevenueFromProducts());
+        revenueSourceDto.setServicesRevenue(company.getRevenueFromServices());
+
+        return ResponseEntity.ok(revenueSourceDto);
     }
 
 

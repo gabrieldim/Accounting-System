@@ -15,19 +15,31 @@ public class Company {
     private String founder;
     @ManyToMany
     private List<Product> products;
+
     @ManyToMany
     private List<WorkService> workServices;
+
     private String address;
+
     @Column(name="incorporation_date")
     private LocalDateTime incorporationDate;
+
     @Column(name="tax_number")
     private String taxNumber;
+
     @Column(name="registered_number")
     private String registeredNumber;
+
     @ManyToOne
     private User user;
+
     private Long soldProducts;
+
     private Long soldServices;
+    
+    private Long revenueFromProducts;
+
+    private Long revenueFromServices;
 
     public Long getSoldProducts() {
         return soldProducts;
@@ -48,8 +60,10 @@ public class Company {
     public Company(String name, String founder, String address, LocalDateTime incorporationDate,
                    String taxNumber, String registeredNumber, User user) {
         this.name = name;
-        this.soldProducts=0l;
-        this.soldServices=0l;
+        this.soldProducts = 0l;
+        this.soldServices = 0l;
+        this.revenueFromProducts = 0l;
+        this.revenueFromServices = 0l;
         this.founder = founder;
         this.address = address;
         this.incorporationDate = incorporationDate;
@@ -64,8 +78,10 @@ public class Company {
         this.name = name;
         this.founder = founder;
         this.products = products;
-        this.soldProducts=0l;
-        this.soldServices=0l;
+        this.soldProducts = 0l;
+        this.soldServices = 0l;
+        this.revenueFromProducts = 0l;
+        this.revenueFromServices = 0l;
         this.workServices = workServices;
         this.address = address;
         this.incorporationDate = incorporationDate;
@@ -157,5 +173,21 @@ public class Company {
 
     public void setRegisteredNumber(String registeredNumber) {
         this.registeredNumber = registeredNumber;
+    }
+
+    public Long getRevenueFromProducts() {
+        return revenueFromProducts;
+    }
+
+    public void setRevenueFromProducts(Long revenueFromProducts) {
+        this.revenueFromProducts = revenueFromProducts;
+    }
+
+    public Long getRevenueFromServices() {
+        return revenueFromServices;
+    }
+
+    public void setRevenueFromServices(Long revenueFromServices) {
+        this.revenueFromServices = revenueFromServices;
     }
 }

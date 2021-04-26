@@ -114,6 +114,8 @@ public class TurnoverController {
 
         Long totalAmount = product.getPrice() * Long.valueOf(amount);
         turnover.setAmount(totalAmount);
+        company.setRevenueFromProducts(company.getRevenueFromProducts() + totalAmount);
+        this.companyService.save(company);
         this.turnoverRepository.save(turnover);
 
         return "redirect:/dashboard";
@@ -146,6 +148,9 @@ public class TurnoverController {
 
         Long totalAmount = workService.getPrice() * Long.valueOf(amount);
         turnover.setAmount(totalAmount);
+
+        company.setRevenueFromServices(company.getRevenueFromServices() + totalAmount);
+        this.companyService.save(company);
         this.turnoverRepository.save(turnover);
 
         return "redirect:/dashboard";
