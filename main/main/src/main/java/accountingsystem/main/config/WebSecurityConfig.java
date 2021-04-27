@@ -42,7 +42,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/auth/login")
         .and()
-        .oauth2Login();
+        .oauth2Login()
+                .defaultSuccessUrl("/dashboard",true);
 
 
 
