@@ -63,7 +63,7 @@ public class TurnoverController {
         String headerValue = "attachment; filename=turnover_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
 
-        TestPDFExporter exporter = new TestPDFExporter();
+        PDFExporter exporter = new PDFExporter();
         exporter.export(response, principal, userRepository, companyService, turnoverRepository);
     }
 
@@ -82,7 +82,7 @@ public class TurnoverController {
         response.setHeader(headerKey, headerValue);
         List<Turnover> turnoverList=this.turnoverService.getAllByCompanyAndMonth(companyID,date);
 
-        TestPDFExporter exporter = new TestPDFExporter();
+        PDFExporter exporter = new PDFExporter();
         exporter.export(response, principal, userRepository, companyService, turnoverRepository);
     }
 

@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Accounting System - 404 Not Found</title>
+    <title>Accounting System - Send Email</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -54,7 +54,7 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            Interface
+            Insert
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
@@ -66,8 +66,9 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Custom Components:</h6>
-                    <a class="collapse-item" href="/turnover/insert">Insert daily turnover</a>
+                    <h6 class="collapse-header">Insert daily turnover:</h6>
+                    <a class="collapse-item" href="/turnover/insert">Products</a>
+                    <a class="collapse-item" href="/turnover/insert/services">Services</a>
                 </div>
             </div>
         </li>
@@ -91,8 +92,6 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider">
-
-        <!-- Heading -->
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
@@ -121,6 +120,13 @@
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
 
+
+
+                    <!-- Nav Item - Alerts -->
+
+
+                    <!-- Nav Item - Messages -->
+
                     <div class="topbar-divider d-none d-sm-block"></div>
 
                     <!-- Nav Item - User Information -->
@@ -144,17 +150,19 @@
             </nav>
             <!-- End of Topbar -->
 
-
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
-                <!-- 404 Error Text -->
-                <div class="text-center">
-                    <div class="error mx-auto" data-text="404">404</div>
-                    <p class="lead text-gray-800 mb-5">Page Not Found</p>
-                    <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
-                    <a href="/dashboard">&larr; Back to Dashboard</a>
-                </div>
+                <!-- Page Heading -->
+
+                <form action="/email/report" method="POST">
+                    <div class="form-group">
+                        <label for="email">Send report to (email):</label>
+                        <input type="text" name="email" class="form-control" id="email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->

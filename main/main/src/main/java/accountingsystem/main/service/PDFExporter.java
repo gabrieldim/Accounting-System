@@ -23,21 +23,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class TestPDFExporter {
+public class PDFExporter {
 
     private List<Turnover> turnoverList;
     private Long totalProcurementPrice;
     private Long totalSellingPrice;
     private Double totalTaxed;
 
-    public TestPDFExporter(List<Turnover> turnoverList){
+    public PDFExporter(List<Turnover> turnoverList){
         this.turnoverList=turnoverList;
         this.totalProcurementPrice= Long.valueOf(0);
         this.totalSellingPrice=Long.valueOf(0);
         this.totalTaxed=Double.valueOf(0);
     }
 
-    public TestPDFExporter() {
+    public PDFExporter() {
         this.totalProcurementPrice= Long.valueOf(0);
         this.totalSellingPrice=Long.valueOf(0);
         this.totalTaxed=Double.valueOf(0);
