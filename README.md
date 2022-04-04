@@ -1,5 +1,5 @@
 # Accounting-System
- Accounting system written in Java Spring.
+ Accounting system written in Java Spring Boot.
 ## Idea of the project: </br>
 Conducting accounting processes in order to enable better organization, records and planning of companies. </br>
 For each good and service a separate view of sales. </br>
